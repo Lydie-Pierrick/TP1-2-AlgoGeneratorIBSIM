@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     ofstream file;
     // Open and link to the file
-    file.open("fattree.topo");
+    file.open("fattree_6.topo");
 
     int nNodesPerPod = (k/2)*(k/2);
     int nNodesPerSwitch = k /2;
@@ -60,9 +60,10 @@ int main(int argc, char** argv)
             int iPort = 1;
             // For the first three ports : all for switch Aggr
             while(iPort <= nNodesPerSwitch){
-                file << "[" << iPort << "] \"Aggr(" << iPods << " " << iSwitch + nNodesPerSwitch << " " << nThird << ")\"[" << iSwitch + 1 << "]" << endl;
+                int iSwitch2 = 0;
+                file << "[" << iPort << "] \"Aggr(" << iPods << " " << iSwitch2 + nNodesPerSwitch << " " << nThird << ")\"[" << iSwitch2 + 1 << "]" << endl;
                 iPort ++;
-                iSwitch ++;
+                iSwitch2 ++;
             }
 
             // For the last three ports : all for nodes
@@ -71,6 +72,8 @@ int main(int argc, char** argv)
                 iPort ++;
                 counterNodes ++;
             }
+
+            iSwitch ++;
 
             file << endl;
         }
@@ -82,18 +85,22 @@ int main(int argc, char** argv)
         while(iSwitch < k){
             file << "Switch\t" << k << "\t\"Aggr(" << iPods << " " << iSwitch << " " << nThird << ")\"" << endl;
             int iPort = 1;
+
+
             // For the first three ports : all for switch Core
             while(iPort <= nNodesPerSwitch){
-                file << "[" << iPort << "] \"Core(" << nCores << " " << iSwitch + 1 << " " << iPort << ")\"[" << iSwitch + 1 << "]" << endl;
+                file << "[" << iPort << "] \"Core(" << nCores << " " << iSwitch + 1 - nNodesPerSwitch << " " << iPort << ")\"[" << iPods + 1 << "]" << endl;
                 iPort ++;
             }
 
+            int iSwitch2 = nNodesPerSwitch;
             // For the last three ports : all for switch Edge
             while(iPort > nNodesPerSwitch && iPort <= k){
-                file << "[" << iPort << "] \"Edge(" << iPods << " " << iSwitch - nNodesPerSwitch << " " << nThird << ")\"[" << iSwitch + 1 << "]" << endl;
+                file << "[" << iPort << "] \"Edge(" << iPods << " " << iSwitch2 - nNodesPerSwitch << " " << nThird << ")\"[" << iSwitch + 1 << "]" << endl;
                 iPort ++;
-                iSwitch ++;
+                iSwitch2 ++;
             }
+            iSwitch ++;
             file << endl;
         }
     }
