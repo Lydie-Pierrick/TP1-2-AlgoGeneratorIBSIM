@@ -1,0 +1,32 @@
+#fat tree topology file.
+#Value of k = 2
+#Total number of hosts = 4
+#Number of hosts under each switch = 1
+####################################################
+
+Hca	1	"Node(0)"
+[1] "Edge(0 1 1)"[1]
+
+Hca	1	"Node(1)"
+[1] "Edge(1 1 1)"[1]
+
+Switch	2	"Edge(0 0 1)"
+[1] "Aggr(0 1 1)"[1]
+[2] "Node(0)"[1]
+
+Switch	2	"Edge(1 0 1)"
+[1] "Aggr(1 1 1)"[1]
+[2] "Node(0)"[1]
+
+Switch	2	"Aggr(0 1 1)"
+[1] "Core(1 2 1)"[2]
+[2] "Edge(0 0 1)"[2]
+
+Switch	2	"Aggr(1 1 1)"
+[1] "Core(1 2 1)"[2]
+[2] "Edge(1 0 1)"[2]
+
+Switch	2	"Core(1 1 1)"
+[1] "Aggr(0 0 1)"[0]
+[2] "Aggr(1 0 1)"[0]
+
